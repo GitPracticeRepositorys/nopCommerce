@@ -1,25 +1,23 @@
+---
 trigger:
-- develop
-
+  - develop
 pool:
-  vmImage: 'ubuntu-latest'
-  
+  vmImage: ubuntu-latest
 steps:
-- script: |
-    git clone https://github.com/GitPracticeRepositorys/nopCommerce.git
-    cd nopCommerce
-    mvn clean package
-  displayName: 'Build with Maven'
-
-steps:
-  - task: Docker@2
-    displayName: 'Build and Push Docker Image'
-    inputs:
-      command: buildAndPush
-      containerRegistry: DockerHub
-      repository: shivakrishna99/nopCommerce
-      dockerfile: $(Build.SourcesDirectory)/src/nopCommerceWeb/Dockerfile
-      tags: |
-        $(Build.BuildId)
-        latest
+  - script: |
+      git clone https://github.com/GitPracticeRepositorys/nopCommerce.git
+      cd nopCommerce
+      mvn clean package
+    displayName: Build with Maven
+  - script:
+      - task: Docker@2
+      - displayName: Build and Push Docker Image
+        inputs:
+          command: buildAndPush
+          containerRegistry: DockerHub
+          repository: shivakrishna99/nopCommerce
+          dockerfile: $(Build.SourcesDirectory)/src/nopCommerceWeb/Dockerfile
+          tags: |
+            $(Build.BuildId)
+            latest
 
