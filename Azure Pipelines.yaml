@@ -11,7 +11,15 @@ steps:
     mvn clean package
   displayName: 'Build with Maven'
 
-- script: |
-    docker build -t shivakrishna99/nopCommerce .
-    docker push shivakrishna99/nopCommerce
-  displayName: 'Build and Push Docker Image'
+steps:
+  - task: Docker@2
+    displayName: 'Build and Push Docker Image'
+    inputs:
+      command: buildAndPush
+      containerRegistry: DockerHub
+      repository: shivakrishna99/nopCommerce
+      dockerfile: $(Build.SourcesDirectory)/src/nopCommerceWeb/Dockerfile
+      tags: |
+        $(Build.BuildId)
+        latest
+
