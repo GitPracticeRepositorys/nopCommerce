@@ -12,7 +12,7 @@ steps:
     displayName: 'Build and Push Docker Image'
     inputs:
       command: 'buildAndPush'
-      containerRegistry: 'DockerHub'
+      containerRegistry: 'Docker-Hub-Connection'
       repository: 'shivakrishna99/nopCommerce'
       dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
       tags: |
