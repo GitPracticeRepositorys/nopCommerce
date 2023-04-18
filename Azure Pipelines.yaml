@@ -1,0 +1,17 @@
+trigger:
+- develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+  
+steps:
+- script: |
+    git clone https://github.com/GitPracticeRepositorys/nopCommerce.git
+    cd nopCommerce
+    mvn clean package
+  displayName: 'Build with Maven'
+
+- script: |
+    docker build -t shivakrishna99/nopCommerce .
+    docker push shivakrishna99/nopCommerce
+  displayName: 'Build and Push Docker Image'
